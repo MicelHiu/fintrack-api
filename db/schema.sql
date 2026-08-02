@@ -25,7 +25,7 @@ USING type::accounts_type;
 CREATE TYPE transaction_type AS ENUM ('income', 'expense', 'transfer');
 
 CREATE TABLE categories (
-id BIGSERIAL PRIMARY KEY,
+id SERIAL PRIMARY KEY,
 name varchar(255) NOT NULL,
 type varchar(20) NOT NULL,
 

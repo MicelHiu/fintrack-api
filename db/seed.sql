@@ -64,3 +64,6 @@ INSERT INTO budgets (user_id, category_id, month, limit_amount) VALUES
 
 (3, 3, '2026-07-01', 700.00),
 (3, 5, '2026-07-01', 1000.00);
+
+INSERT INTO categories (name, type)
+VALUES ('Healthcare', 'expense');
