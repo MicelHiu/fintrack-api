@@ -4,7 +4,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/prisma/client";
 
 const adapter = new PrismaPg({
-     connectionString: process.env.DATABASE_URL,
+    connectionString: process.env.DATABASE_URL,
 });
 const prisma = new PrismaClient({ 
     adapter,
@@ -251,7 +251,7 @@ async function main() {
     ],
   });
 
-  /* Budgets */
+/*  Budgets
   await prisma.budgets.createMany({
     data: [
       {
@@ -291,7 +291,7 @@ async function main() {
         limit_amount: 1000,
       },
     ],
-  });
+  }); */
 
   console.log("✅ Seeding completed.");
 }
