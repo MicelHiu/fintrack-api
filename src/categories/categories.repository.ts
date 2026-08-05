@@ -29,14 +29,16 @@ export class CategoriesRepository {
     }
 
     async deleteCategory(id: number) {
-        const deleted = await this.prisma.categories.delete({where: {id}});
+        const deleted = await this.prisma.categories.delete({
+            where: {id},
+        });
 
         if(deleted) {
             return { 
                 message: 'Category deleted',
                 status: 203,
-                id: id,
-            };
-        }
+                id: id
+            }
+        };
     }
 }
