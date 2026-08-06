@@ -1,6 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import { BadGatewayException, Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateTransactionDto } from "./dto/create-transaction.dto";
+import { UpdateTransactionDto } from "./dto/update-transaction.dto";
+import { Decimal } from "@prisma/client/runtime/index-browser";
 
 @Injectable()
 export class TransactionsRepository {
@@ -56,7 +58,6 @@ export class TransactionsRepository {
                 },
             }
         }),
-
         this.prisma.accounts.update({
             where: {
                 id: dto.account_id,
@@ -66,4 +67,59 @@ export class TransactionsRepository {
             }
         });
     }
+
+    async updateTransaction(
+        dto: UpdateTransactionDto,
+        id: number,
+        account_id: number,
+        newBalance: Decimal,
+    ) {
+        const [updated] = await this.prisma.$transaction([
+            this.prisma.transactions.update({
+                where: { id },
+                data: dto,
+                include: {
+                    accounts: { select: { balance: true } },
+                    categories: { select: { name: true, type: true } },
+                },
+            }),
+            this.prisma.accounts.update({
+                where: { id: account_id }, // ✅ bukan dto.account_id
+                data: { balance: newBalance },
+            }),
+        ]);
+
+        if (!updated) {
+            throw new BadGatewayException("Update failed, please try again later."); // ✅ throw, bukan return
+        }
+
+        return updated;
+    }
+
+    async deleteTransaction(id: number, account_id: number, newBalance: Decimal) {
+    const [deleted] = await this.prisma.$transaction([
+        this.prisma.transactions.delete({
+            where: { id },
+            include: {
+                accounts: {
+                    select: {
+                        user_id: true,
+                        name: true,
+                        balance: true,
+                    },
+                },
+            },
+        }),
+        this.prisma.accounts.update({
+            where: { id: account_id }, // ✅ bukan dto.account_id lagi
+            data: { balance: newBalance },
+        }),
+    ]);
+
+    return {
+        message: 'Transaction deleted',
+        status: 203,
+        id,
+    };
+}
 }
