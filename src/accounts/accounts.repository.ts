@@ -2,17 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
+import { accounts_type } from 'generated/prisma/enums';
 
 @Injectable()
 export class AccountsRepository {
     constructor(private readonly prisma: PrismaService) {}
 
-    getAllAccounts() {
-        return this.prisma.accounts.findMany();
+    getAllAccounts(userId: number) {
+        return this.prisma.accounts.findMany({where: {user_id: userId}});
     }
 
-    getAccountById(id: number) {
-        return this.prisma.accounts.findUnique({where: {id}});
+    getAccountById(id: number, userId: number) {
+        return this.prisma.accounts.findUnique({where: {id, user_id: userId}});
     }
 
     getUserId(userId: number) {
@@ -24,9 +25,14 @@ export class AccountsRepository {
         });
     }
 
-    createAccount(dto: CreateAccountDto) {
+    createAccount(data: {
+        user_id: number;
+        name: string;
+        type: accounts_type;
+        balance: number;
+    }) {
         return this.prisma.accounts.create({
-            data: dto,
+            data,
             include: {
                 users: {
                     select: {

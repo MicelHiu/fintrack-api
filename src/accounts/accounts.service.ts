@@ -7,33 +7,33 @@ import { UpdateAccountDto } from './dto/update-account.dto';
 @Injectable()
 export class AccountsService {
     constructor(private readonly accountsRepository: AccountsRepository) {}
-    getAllAccounts() {
-        return this.accountsRepository.getAllAccounts();
+    async getAllAccounts(userId: number) {
+        return this.accountsRepository.getAllAccounts(userId);
     }
 
-    async getAccountById(id: number) {
-        const account = await this.accountsRepository.getAccountById(id);
+    async getAccountById(id: number, userId: number) {
+        const account = await this.accountsRepository.getAccountById(id, userId);
         if(!account) {
             throw new NotFoundException(`Account with ID ${id} not found`);
         }
         return account;
     }
 
-    async createAccount(dto: CreateAccountDto) {
-        const user_id = await this.accountsRepository.getAccountById(dto.user_id);
+    async createAccount(sub: number, dto: CreateAccountDto) {
+        const user_id = await this.accountsRepository.getUserId(sub);
         if(!user_id) {
-            throw new NotFoundException(`User with ID ${dto.user_id} not found`);
+            throw new NotFoundException(`User with ID ${sub} not found`);
         }
         return this.accountsRepository.createAccount({
-            user_id: dto.user_id,
+            user_id: sub,
             name: dto.name,
             type: dto.type,
             balance: dto.balance,
         });
     }
 
-    async updateAccount(dto: UpdateAccountDto, id: number) {
-        const accountId = await this.accountsRepository.getUserId(dto.user_id);
+    async updateAccount(dto: UpdateAccountDto, id: number, userId: number) {
+        const accountId = await this.accountsRepository.getAccountById(id, userId);
         if(!accountId) throw new NotFoundException(`Account with ID ${id} not found`);
 
         const updated = await this.accountsRepository.updateAccount(dto, id);
@@ -41,8 +41,8 @@ export class AccountsService {
         return updated;
     }
 
-    async deleteAccount(id: number) {
-        const deleted = await this.accountsRepository.getAccountById(id);
+    async deleteAccount(id: number, userId: number) {
+        const deleted = await this.accountsRepository.getAccountById(id, userId);
         if(!deleted) throw new NotFoundException(`This account not found`);
         return this.accountsRepository.deleteAccount(id);
     }

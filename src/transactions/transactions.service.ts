@@ -12,21 +12,21 @@ export class TransactionsService {
         private readonly transactionsRepository: TransactionsRepository,
         private readonly balanceCalculator: BalanceCalculatorService
     ) {}
-    getAllTransactions() {
-        return this.transactionsRepository.getAllTransactions();
+    async getAllTransactions(userId: number) {
+        return this.transactionsRepository.getAllTransactions(userId);
     }
 
-    async getTransactionById(id: number) {
-        const data = await this.transactionsRepository.getTransactionById(id);
+    async getTransactionById(id: number, userId: number) {
+        const data = await this.transactionsRepository.getTransactionById(id, userId);
         if (!data) throw new NotFoundException(`transaction not found`);
         return data;
     }
 
-    async createTransactions(dto: CreateTransactionDto) {
-        const account = await this.transactionsRepository.getAccountId(dto.account_id);
+    async createTransactions(dto: CreateTransactionDto, userId: number) {
+        const account = await this.transactionsRepository.getAccountId(dto.account_id, userId);
         const category = await this.transactionsRepository.getCategoryId(dto.category_id);
-        if(!account) throw new NotFoundException(`Account not found`);
-        if(!category) throw new NotFoundException(`Category not found`);
+        if (!account) throw new NotFoundException(`Account not found`);
+        if (!category) throw new NotFoundException(`Category not found`);
 
         if(category.type !== this.balanceCalculator.expectedCategoryType(dto.type)) {
             throw new BadRequestException(
@@ -38,16 +38,16 @@ export class TransactionsService {
             throw new BadRequestException("Your account's balance is not enough");
         }
 
-        const newBalance = this.balanceCalculator.apply(account, this.balanceCalculator, dto.type, dto.amount);
+        const newBalance = this.balanceCalculator.apply(account.balance, dto.type, dto.amount);
 
         return this.transactionsRepository.createTransaction({ ...dto }, newBalance);
     }
 
-    async updateTransactions(dto: UpdateTransactionDto, id: number) {
-        const oldTransaction = await this.transactionsRepository.getTransactionById(id);
+    async updateTransactions(dto: UpdateTransactionDto, id: number, userId: number) {
+        const oldTransaction = await this.transactionsRepository.getTransactionById(id, userId);
         if (!oldTransaction) throw new NotFoundException('Transaction not found');
 
-        const account = await this.transactionsRepository.getAccountId(oldTransaction.account_id);
+        const account = await this.transactionsRepository.getAccountId(oldTransaction.account_id, userId);
         if (!account) throw new NotFoundException('Account not found');
 
         // revert efek transaksi lama
@@ -73,11 +73,11 @@ export class TransactionsService {
         return this.transactionsRepository.updateTransaction(dto, id, oldTransaction.account_id, newBalance);
     }
 
-    async deleteTransaction(id: number,  ) {
-        const transaction = await this.transactionsRepository.getTransactionById(id);
+    async deleteTransaction(id: number, userId: number) {
+        const transaction = await this.transactionsRepository.getTransactionById(id, userId);
         if (!transaction) throw new NotFoundException('Transaction not found');
 
-        const account = await this.transactionsRepository.getAccountId(transaction.account_id);
+        const account = await this.transactionsRepository.getAccountId(transaction.account_id, userId);
         if (!account) throw new NotFoundException('Account not found');
 
         const newBalance = this.balanceCalculator.revert(account.balance, transaction.type, transaction.amount);

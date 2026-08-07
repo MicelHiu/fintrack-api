@@ -7,12 +7,15 @@ import { Decimal } from "@prisma/client/runtime/index-browser";
 @Injectable()
 export class TransactionsRepository {
     constructor(private readonly prisma: PrismaService) {}
-    getAllTransactions() {
-        return this.prisma.transactions.findMany();
+    getAllTransactions(userId: number) {
+        return this.prisma.transactions.findMany({
+            where: { accounts: {user_id: userId}}
+        });
     }    
 
-    getTransactionById(id: number) {
-        return this.prisma.transactions.findUnique({where: {id}});
+    getTransactionById(id: number, userId: number) {
+        return this.prisma.transactions.findUnique({where: {id,  accounts: { user_id: userId}},    
+        });
     }
 
     getCategoryId(category_id: number) {
@@ -22,9 +25,9 @@ export class TransactionsRepository {
         })
     }
 
-    getAccountId(account_id: number) {
-        return this.prisma.accounts.findUnique({
-            where: {id: account_id},
+    getAccountId(account_id: number, userId: number) {
+        return this.prisma.accounts.findFirst({
+            where: {id: account_id, user_id: userId},
             select: {
                 name: true,
                 balance: true,
@@ -69,7 +72,7 @@ export class TransactionsRepository {
     ) {
         const [, updated] = await this.prisma.$transaction([
             this.prisma.accounts.update({
-                where: { id: account_id }, // ✅ bukan dto.account_id
+                where: { id: account_id },
                 data: { balance: newBalance },
             }),
             this.prisma.transactions.update({

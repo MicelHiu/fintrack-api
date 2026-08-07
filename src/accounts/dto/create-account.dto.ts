@@ -2,9 +2,9 @@ import { IsString, MaxLength, IsEnum, IsNumber, Min } from "class-validator";
 import { accounts_type } from "generated/prisma/client";
 
 export class CreateAccountDto {
-    @IsNumber()
+/*     @IsNumber()
     user_id!: number;
-
+ */
     @IsString()
     @MaxLength(255)
     name!: string;
