@@ -10,7 +10,7 @@ export class UsersService {
         return this.usersRepository.getAllUsers();
     }
 
-    async getUserById(id: number) {
+    async getUserById(id: number, sub?: number) {
         const user = await this.usersRepository.getUserById(id);
         if(!user) return new NotFoundException(`User with id ${id} not found`);
         return user;

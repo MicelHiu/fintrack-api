@@ -15,6 +15,8 @@ export class RolesGuard implements CanActivate {
 
         //set by JwtAuthGuard, which must run first in @UseGuards
         const {user} = ctx.switchToHttp().getRequest();
+        console.log('User from token:', user); // tambahin ini
+        console.log('Required roles:', required); // dan ini
         return required.includes(user?.role);
     }
     

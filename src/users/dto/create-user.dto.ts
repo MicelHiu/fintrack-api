@@ -11,7 +11,6 @@ export class CreateUserDto {
 
     /* @Matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8}$/) //musti 8  */
     @IsString()
-    @MaxLength(8)
     password!: string;
 
     @IsString()
