@@ -23,6 +23,7 @@ import { PrismaModule } from 'src/prisma/prisma.module';
         };
       },
     }), PrismaModule
+    
   ],
   controllers: [AuthController],
   providers: [AuthService, AuthRepository, JwtAuthGuard, RolesGuard],
