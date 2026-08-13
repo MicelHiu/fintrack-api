@@ -8,12 +8,12 @@ import { accounts_type } from 'generated/prisma/enums';
 export class AccountsRepository {
     constructor(private readonly prisma: PrismaService) {}
 
-    getAllAccounts(userId: number) {
-        return this.prisma.accounts.findMany({where: {user_id: userId}});
+    getAllAccounts() {
+        return this.prisma.accounts.findMany();
     }
 
-    getAccountById(id: number, userId: number) {
-        return this.prisma.accounts.findUnique({where: {id, user_id: userId}});
+    getAccountById(id: number) {
+        return this.prisma.accounts.findUnique({where: {id}});
     }
 
     getUserId(userId: number) {

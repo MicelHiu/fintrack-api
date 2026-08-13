@@ -7,14 +7,14 @@ import { UpdateAccountDto } from './dto/update-account.dto';
 @Injectable()
 export class AccountsService {
     constructor(private readonly accountsRepository: AccountsRepository) {}
-    async getAllAccounts(userId: number) {
-        return this.accountsRepository.getAllAccounts(userId);
+    async getAllAccounts() {
+        return this.accountsRepository.getAllAccounts();
     }
 
-    async getAccountById(id: number, userId: number) {
-        const account = await this.accountsRepository.getAccountById(id, userId);
+    async getAccountById(id: number, userId?: number) {
+        const account = await this.accountsRepository.getAccountById(id);
         if(!account) {
-            throw new NotFoundException(`Account with ID ${id} not found`);
+            return new NotFoundException(`Account with ID ${id} not found`);
         }
         return account;
     }
@@ -33,7 +33,7 @@ export class AccountsService {
     }
 
     async updateAccount(dto: UpdateAccountDto, id: number, userId: number) {
-        const accountId = await this.accountsRepository.getAccountById(id, userId);
+        const accountId = await this.accountsRepository.getAccountById(id);
         if(!accountId) throw new NotFoundException(`Account with ID ${id} not found`);
 
         const updated = await this.accountsRepository.updateAccount(dto, id);
@@ -42,7 +42,7 @@ export class AccountsService {
     }
 
     async deleteAccount(id: number, userId: number) {
-        const deleted = await this.accountsRepository.getAccountById(id, userId);
+        const deleted = await this.accountsRepository.getAccountById(id);
         if(!deleted) throw new NotFoundException(`This account not found`);
         return this.accountsRepository.deleteAccount(id);
     }
