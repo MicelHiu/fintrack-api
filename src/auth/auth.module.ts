@@ -6,6 +6,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtAuthGuard } from './jwt-auth-guard';
 import { RolesGuard } from './roles-guard';
 import { PrismaModule } from 'src/prisma/prisma.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -16,17 +18,26 @@ import { PrismaModule } from 'src/prisma/prisma.module';
         if(!secret) {
           throw new Error('JWT_SECRET is not set');
         }
-
         return {
           secret,
           signOptions: {expiresIn: '1h'},
         };
       },
-    }), PrismaModule
-    
+    }), 
+    PrismaModule,
+    ThrottlerModule.forRoot([{
+      ttl: 60000,
+      limit: 5,
+    }]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, AuthRepository, JwtAuthGuard, RolesGuard],
+  providers: [
+    AuthService, 
+    AuthRepository, 
+    JwtAuthGuard, 
+    RolesGuard, 
+    { provide: APP_GUARD, useClass: ThrottlerGuard },
+  ],
   exports: [AuthService, JwtAuthGuard, RolesGuard, JwtModule],
 })
 export class AuthModule {}

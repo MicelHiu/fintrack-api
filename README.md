@@ -10,7 +10,7 @@ npm install
 ### 2. Environment Variables
 .env.example
 ```bash
-DATABASE_URL="postgresql://postgres.vanvnwbnhpcyotzvcxsp:M1celH1u!!123@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres"
+DATABASE_URL="postgresql://postgres.vanvnwbnhpcyotzvcxsp:<your password>@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres"
 JWT_SECRET="F1ntrack_ap1"
 
 copy ".env.example" to ".env" file

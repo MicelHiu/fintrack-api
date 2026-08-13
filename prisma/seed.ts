@@ -251,48 +251,6 @@ async function main() {
     ],
   });
 
-/*  Budgets
-  await prisma.budgets.createMany({
-    data: [
-      {
-        user_id: 1,
-        category_id: 3,
-        month: new Date("2026-07-01"),
-        limit_amount: 500,
-      },
-      {
-        user_id: 1,
-        category_id: 5,
-        month: new Date("2026-07-01"),
-        limit_amount: 800,
-      },
-      {
-        user_id: 2,
-        category_id: 3,
-        month: new Date("2026-07-01"),
-        limit_amount: 400,
-      },
-      {
-        user_id: 2,
-        category_id: 6,
-        month: new Date("2026-07-01"),
-        limit_amount: 300,
-      },
-      {
-        user_id: 3,
-        category_id: 3,
-        month: new Date("2026-07-01"),
-        limit_amount: 700,
-      },
-      {
-        user_id: 3,
-        category_id: 5,
-        month: new Date("2026-07-01"),
-        limit_amount: 1000,
-      },
-    ],
-  }); */
-
   console.log("✅ Seeding completed.");
 }
 
