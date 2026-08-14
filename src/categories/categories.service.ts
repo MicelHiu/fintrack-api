@@ -21,9 +21,10 @@ export class CategoriesService {
         return this.categoriesRepository.createCategory(dto);
     }
 
-    updateCategory(id: number, dto: UpdateCategoryDto) {
-        const category = this.categoriesRepository.getCategoryById(id);
+    async updateCategory(id: number, dto: UpdateCategoryDto) {
+        const category = await this.categoriesRepository.getCategoryById(id);
         if(!category) throw new NotFoundException(`Category not found`);
+        console.log(dto); 
         return this.categoriesRepository.updateCategory(dto, id);
     }
 

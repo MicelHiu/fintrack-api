@@ -16,9 +16,15 @@ export class AccountsController {
       return this.accountsService.getAllAccounts();
     }
 
+    @Roles('admin')
     @Get(':id')
     getAccountById(@Param('id', ParseIntPipe) id: number, @CurrentUser() user: { sub: number }) {
       return this.accountsService.getAccountById(id, user.sub);
+    }
+
+    @Get('current')
+    getCurrentAccount(@CurrentUser() user: { sub: number}) {
+      return this.accountsService.getAccountByUserId(user.sub);
     }
 
     @Post()

@@ -13,7 +13,15 @@ export class AccountsRepository {
     }
 
     getAccountById(id: number) {
-        return this.prisma.accounts.findUnique({where: {id}});
+        return this.prisma.accounts.findUnique({
+            where: {id}
+        });
+    }
+
+    async getAccountByUserId(userId: number) {
+        return this.prisma.accounts.findMany({
+            where: { user_id: userId }
+        });
     }
 
     getUserId(userId: number) {
