@@ -1,0 +1,5200 @@
+{
+  "info": {
+    "_postman_id": "2c83f0b9-11a9-477d-a15c-62da356b6f0e",
+    "name": "fintrack-api",
+    "description": "This collection covers the core REST API endpoints for **FinTrack**, a personal finance tracking application. It is organized into five functional modules:\n\n- **Auth** — Handles user registration and login, including token issuance and credential validation.\n    \n- **Users** — Manages user accounts: listing all users, retrieving a user by ID, fetching the currently authenticated user, creating, and deleting users.\n    \n- **Accounts** — Provides full CRUD operations for financial accounts linked to a user, including balance management.\n    \n- **Transactions** — Manages financial transactions (income/expenses) with support for creating, reading, updating, and deleting entries. Balance recalculation is handled automatically on update and delete.\n    \n- **Categories** — Allows categorization of transactions. Admin-restricted endpoints control the creation, update, and deletion of categories.\n    \n\nEach request includes documented response examples covering success cases (2xx) as well as common error scenarios (400, 401, 403, 404, 409, 429), making this collection suitable for both development and testing workflows.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56609845"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"michelle@example.com\",\r\n    \"password\": \"password123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local_url}}/auth/login",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - token issued",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"micel@gmail.com\",\r\n    \"password\": \"micel123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/auth/login",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "176"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"b0-TrH8hjX3dcfCeUN2b2mei8h/9kQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 10 Aug 2026 09:43:25 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzg2MzU1MDA1LCJleHAiOjE3ODYzNTg2MDV9.tpEAG4X9seLqfTXTgRlaymsvfZ5gTYCbaevgh4xCkCY\"\n}"
+            },
+            {
+              "name": "401 - invalid credentials",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"micel@gmail.com\",\r\n    \"password\": \"micel\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/auth/login",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "73"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"49-Fx+yDPXfDSYD3nxIxyU6P47CVX0\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 08 Aug 2026 03:43:20 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Invalid credentials\",\n    \"error\": \"Unauthorized\",\n    \"statusCode\": 401\n}"
+            },
+            {
+              "name": "429 - too many request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"cindy@example.com\",\r\n    \"password\": \"password123\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/auth/login",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Retry-After",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "68"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"44-McWaoNlzt3iglN2odEGCDEADErE\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 11 Aug 2026 15:43:57 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"statusCode\": 429,\n    \"message\": \"ThrottlerException: Too Many Requests\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"agus\",\r\n    \"email\": \"agus@gmail.com\",\r\n    \"password\": \"agus123\",\r\n    \"role\": \"user\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local_url}}/auth/register",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 - registered",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Micel\",\r\n    \"email\": \"micel@gmail.com\",\r\n    \"password\": \"micel123\",\r\n    \"role\": \"user\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/auth/register",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "103"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"67-1ydWyqo7BDKGXX7QT5+nDF4yKEs\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 08 Aug 2026 03:41:20 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 5,\n    \"name\": \"Micel\",\n    \"email\": \"micel@gmail.com\",\n    \"role\": \"user\",\n    \"created_at\": \"2026-08-08T03:41:20.621Z\"\n}"
+            },
+            {
+              "name": "409 - email already registered",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Micel\",\r\n    \"email\": \"micel@gmail.com\",\r\n    \"password\": \"micel123\",\r\n    \"role\": \"admin\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/auth/register",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "74"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"4a-JTgIuXoq8rerASDEsJP7z9e0+uI\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 08 Aug 2026 03:43:49 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Email already registered\",\n    \"error\": \"Conflict\",\n    \"statusCode\": 409\n}"
+            },
+            {
+              "name": "400 - invalid email",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Zahrah\",\r\n    \"email\": \"zahrah.com\",\r\n    \"password\": \"zahrah123\",\r\n    \"role\": \"user\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/auth/register",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "77"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"4d-3V3Uy1KR57m8txxwRQ1zEUNG0HY\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 10 Aug 2026 09:30:25 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": [\n        \"email must be an email\"\n    ],\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "users",
+      "item": [
+        {
+          "name": "get all users",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4NjYzNzAyMSwiZXhwIjoxNzg2NjQwNjIxfQ.hSxofdphyQ23QfF58RGfBhPIKdvZxTSbbRXx099lNtE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"hiudarat\",\r\n    \"password\": \"M1celH1u\",\r\n    \"first_name\": \"hiu\",\r\n    \"last_name\": \"darat\",\r\n    \"address\": \"Jl. Bumi Langit\",\r\n    \"phone_number\": \"0818308030\",\r\n    \"email\": \"hiu@gmail.com\"\r\n}"
+            },
+            "url": {
+              "raw": "{{local_url}}/users",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - list",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"username\": \"hiudarat\",\r\n    \"password\": \"M1celH1u\",\r\n    \"first_name\": \"hiu\",\r\n    \"last_name\": \"darat\",\r\n    \"address\": \"Jl. Bumi Langit\",\r\n    \"phone_number\": \"0818308030\",\r\n    \"email\": \"hiu@gmail.com\"\r\n}"
+                },
+                "url": {
+                  "raw": "{{local_url}}/users",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "884"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"374-64yIIfpSJpUCoIqnp7qav2RGT7Y\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 11 Aug 2026 16:27:37 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"id\": 5,\n        \"name\": \"Micel\",\n        \"email\": \"micel@gmail.com\",\n        \"role\": \"user\",\n        \"created_at\": \"2026-08-08T03:41:20.621Z\"\n    },\n    {\n        \"id\": 1,\n        \"name\": \"Michelle Hiu\",\n        \"email\": \"michelle@example.com\",\n        \"role\": \"user\",\n        \"created_at\": \"2026-08-03T07:49:37.178Z\"\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Andi Pratama\",\n        \"email\": \"andi@example.com\",\n        \"role\": \"user\",\n        \"created_at\": \"2026-08-03T07:49:37.178Z\"\n    },\n    {\n        \"id\": 3,\n        \"name\": \"Cindy Wijaya\",\n        \"email\": \"cindy@example.com\",\n        \"role\": \"admin\",\n        \"created_at\": \"2026-08-03T07:49:37.178Z\"\n    },\n    {\n        \"id\": 4,\n        \"name\": \"Mikhael Yordan Hiu\",\n        \"email\": \"mikel@example.com\",\n        \"role\": \"user\",\n        \"created_at\": \"2026-08-04T16:24:24.025Z\"\n    },\n    {\n        \"id\": 6,\n        \"name\": \"Nini\",\n        \"email\": \"nini@gmail.com\",\n        \"role\": \"user\",\n        \"created_at\": \"2026-08-08T05:25:20.848Z\"\n    },\n    {\n        \"id\": 7,\n        \"name\": \"agus\",\n        \"email\": \"agus@gmail.com\",\n        \"role\": \"user\",\n        \"created_at\": \"2026-08-08T06:29:01.442Z\"\n    },\n    {\n        \"id\": 11,\n        \"name\": \"Mickey Mouse\",\n        \"email\": \"mickey@disney.com\",\n        \"role\": \"user\",\n        \"created_at\": \"2026-08-11T16:22:46.170Z\"\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "get userr by id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4NjQ2NTQ4OSwiZXhwIjoxNzg2NDY5MDg5fQ.kc22ySHoEKvIiWaLvhabxV6LqZeLXJ0HvifmAEjfeOY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"username\": \"hiudarat\",\r\n    \"password\": \"M1celH1u\",\r\n    \"first_name\": \"hiu\",\r\n    \"last_name\": \"darat\",\r\n    \"address\": \"Jl. Bumi Langit\",\r\n    \"phone_number\": \"0818308030\",\r\n    \"email\": \"hiu@gmail.com\"\r\n}"
+            },
+            "url": {
+              "raw": "{{local_url}}/users/2",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "users",
+                "2"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - with accounts",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"username\": \"hiudarat\",\r\n    \"password\": \"M1celH1u\",\r\n    \"first_name\": \"hiu\",\r\n    \"last_name\": \"darat\",\r\n    \"address\": \"Jl. Bumi Langit\",\r\n    \"phone_number\": \"0818308030\",\r\n    \"email\": \"hiu@gmail.com\"\r\n}"
+                },
+                "url": {
+                  "raw": "{{local_url}}/users/2",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "2"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "232"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"e8-J3Y2w1S24I5EFU/Nz75xxl7ZlYk\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 11 Aug 2026 16:35:43 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 2,\n    \"name\": \"Andi Pratama\",\n    \"email\": \"andi@example.com\",\n    \"role\": \"user\",\n    \"created_at\": \"2026-08-03T07:49:37.178Z\",\n    \"accounts\": [\n        {\n            \"name\": \"Cash Wallet\",\n            \"type\": \"cash\",\n            \"balance\": \"700\"\n        },\n        {\n            \"name\": \"Mandiri Bank\",\n            \"type\": \"bank\",\n            \"balance\": \"3200\"\n        }\n    ]\n}"
+            },
+            {
+              "name": "404 - Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"username\": \"hiudarat\",\r\n    \"password\": \"M1celH1u\",\r\n    \"first_name\": \"hiu\",\r\n    \"last_name\": \"darat\",\r\n    \"address\": \"Jl. Bumi Langit\",\r\n    \"phone_number\": \"0818308030\",\r\n    \"email\": \"hiu@gmail.com\"\r\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/99",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "99"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "180"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"b4-UOooZTJT7OIkBfjMsbe87IZNS4E\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 04 Aug 2026 16:22:21 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"response\": {\n        \"message\": \"User with id 99 not found\",\n        \"error\": \"Not Found\",\n        \"statusCode\": 404\n    },\n    \"status\": 404,\n    \"options\": {},\n    \"message\": \"User with id 99 not found\",\n    \"name\": \"NotFoundException\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Add User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4NjQ2NDA0OCwiZXhwIjoxNzg2NDY3NjQ4fQ.1NGOSGlETlCGjHTK8CrujxjZtCR7pR9ql_WqQ3JZbG0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Mickey Mouse\",\r\n    \"email\": \"mickey@disney.com\",\r\n    \"password\": \"miskamuska\",\r\n    \"role\": \"user\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local_url}}/users",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 - created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Mickey Mouse\",\r\n    \"email\": \"mickey@disney.com\",\r\n    \"password\": \"miskamuska\",\r\n    \"role\": \"user\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/users",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "113"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"71-3C+fQhNGpbs4foIWqTCms5O2B3g\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 11 Aug 2026 16:22:46 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 11,\n    \"name\": \"Mickey Mouse\",\n    \"email\": \"mickey@disney.com\",\n    \"role\": \"user\",\n    \"created_at\": \"2026-08-11T16:22:46.170Z\"\n}"
+            },
+            {
+              "name": "400 - invalid email",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Mickey Mouse\",\r\n    \"email\": \"Mickey.COM\",\r\n    \"password\": \"M1k3lH1u\",\r\n    \"role\": \"user\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/users",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "77"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"4d-3V3Uy1KR57m8txxwRQ1zEUNG0HY\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 04 Aug 2026 16:25:21 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": [\n        \"email must be an email\"\n    ],\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+            }
+          ]
+        },
+        {
+          "name": "current user",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4NjYzNzAyMSwiZXhwIjoxNzg2NjQwNjIxfQ.hSxofdphyQ23QfF58RGfBhPIKdvZxTSbbRXx099lNtE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local_url}}/users/current",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "users",
+                "current"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - current user",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/users/current",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "current"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "231"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"e7-J9VR966ohj0VAqC+aFI2GixSL6k\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 11 Aug 2026 16:37:08 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 3,\n    \"name\": \"Cindy Wijaya\",\n    \"email\": \"cindy@example.com\",\n    \"role\": \"admin\",\n    \"created_at\": \"2026-08-03T07:49:37.178Z\",\n    \"accounts\": [\n        {\n            \"name\": \"Cash Wallet\",\n            \"type\": \"cash\",\n            \"balance\": \"500\"\n        },\n        {\n            \"name\": \"GoPay\",\n            \"type\": \"e_wallet\",\n            \"balance\": \"1800\"\n        }\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "delete user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4NjQ2NDA0OCwiZXhwIjoxNzg2NDY3NjQ4fQ.1NGOSGlETlCGjHTK8CrujxjZtCR7pR9ql_WqQ3JZbG0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{local_url}}/users/10",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "users",
+                "10"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - user deleted",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{local_url}}/users/10",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "10"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "55"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "47"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"2f-xcPb+8JAjqonNQeMrBYn8Y7op2E\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 11 Aug 2026 16:04:21 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"User deleted\",\n    \"status\": 203,\n    \"id\": 10\n}"
+            },
+            {
+              "name": "404 - id not found",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{local_url}}/users/100",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "100"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "63"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"3f-n0UrOhcAKKSqNpnooH6pQ5DwDWI\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 11 Aug 2026 16:37:47 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Id not found\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "accounts",
+      "item": [
+        {
+          "name": "get all accounts",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4NjYzNzAyMSwiZXhwIjoxNzg2NjQwNjIxfQ.hSxofdphyQ23QfF58RGfBhPIKdvZxTSbbRXx099lNtE",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local_url}}/accounts",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "accounts"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - list",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local_url}}/accounts",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "accounts"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "33"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "670"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"29e-o+Xy0OTU1+zVGi97Uwtki+TQ91k\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 13 Aug 2026 16:09:04 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"id\": 3,\n        \"user_id\": 2,\n        \"name\": \"Cash Wallet\",\n        \"type\": \"cash\",\n        \"balance\": \"700\",\n        \"created_at\": \"2026-08-03T07:49:37.363Z\"\n    },\n    {\n        \"id\": 4,\n        \"user_id\": 2,\n        \"name\": \"Mandiri Bank\",\n        \"type\": \"bank\",\n        \"balance\": \"3200\",\n        \"created_at\": \"2026-08-03T07:49:37.363Z\"\n    },\n    {\n        \"id\": 5,\n        \"user_id\": 3,\n        \"name\": \"Cash Wallet\",\n        \"type\": \"cash\",\n        \"balance\": \"500\",\n        \"created_at\": \"2026-08-03T07:49:37.363Z\"\n    },\n    {\n        \"id\": 6,\n        \"user_id\": 3,\n        \"name\": \"GoPay\",\n        \"type\": \"e_wallet\",\n        \"balance\": \"1800\",\n        \"created_at\": \"2026-08-03T07:49:37.363Z\"\n    },\n    {\n        \"id\": 1,\n        \"user_id\": 1,\n        \"name\": \"BCA Bank\",\n        \"type\": \"bank\",\n        \"balance\": \"5000\",\n        \"created_at\": \"2026-08-03T07:49:37.363Z\"\n    },\n    {\n        \"id\": 2,\n        \"user_id\": 1,\n        \"name\": \"BCA Bank\",\n        \"type\": \"bank\",\n        \"balance\": \"5500\",\n        \"created_at\": \"2026-08-03T07:49:37.363Z\"\n    }\n]"
+            },
+            {
+              "name": "401 - unathorized",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local_url}}/accounts",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "accounts"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "71"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"47-hTNE3HHRqMMGfZK+e0PiAwBsSDQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 13 Aug 2026 16:03:26 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"No token provided\",\n    \"error\": \"Unauthorized\",\n    \"statusCode\": 401\n}"
+            }
+          ]
+        },
+        {
+          "name": "get account by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4NjYzNzk1MCwiZXhwIjoxNzg2NjQxNTUwfQ.L7_khct3GE3PqKV4JHQt2O_DtYyMA4FnAIO-e3jYZT4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local_url}}/accounts/1",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "accounts",
+                "1"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - one",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local_url}}/accounts/1",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "52"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "109"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"6d-SB8DhV+81E95R57NqmkkK/VBtWM\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 13 Aug 2026 16:20:39 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 1,\n    \"user_id\": 1,\n    \"name\": \"BCA Bank\",\n    \"type\": \"bank\",\n    \"balance\": \"5000\",\n    \"created_at\": \"2026-08-03T07:49:37.363Z\"\n}"
+            },
+            {
+              "name": "404 - not found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local_url}}/accounts/99",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "99"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "79"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"4f-ttZ3i1/HepcUpqCAW3i52DMBV6U\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 04 Aug 2026 17:43:28 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Account with ID 99 not found\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+            }
+          ]
+        },
+        {
+          "name": "update account",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"user_id\": 1,\r\n    \"name\": \"BCA Bank\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local_url}}/accounts/1",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "accounts",
+                "1"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - success",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"user_id\": 1,\r\n    \"name\": \"BCA Bank\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/accounts/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "258"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"102-kY7NgWmTEDJWvZLmUvpyUyuZ95k\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 05 Aug 2026 05:40:45 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 1,\n    \"user_id\": 1,\n    \"name\": \"BCA Bank\",\n    \"type\": \"bank\",\n    \"balance\": \"5000\",\n    \"created_at\": \"2026-08-03T07:49:37.363Z\",\n    \"users\": {\n        \"id\": 1,\n        \"name\": \"Michelle Hiu\",\n        \"email\": \"michelle@example.com\",\n        \"password\": \"password123\",\n        \"role\": \"user\",\n        \"created_at\": \"2026-08-03T07:49:37.178Z\"\n    }\n}"
+            },
+            {
+              "name": "404 - not found",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"user_id\": 1,\r\n    \"name\": \"Mandiri Bank\",\r\n    \"type\": \"bank\",\r\n    \"balance\": 5000\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/accounts/99",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "99"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "79"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"4f-ttZ3i1/HepcUpqCAW3i52DMBV6U\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Tue, 04 Aug 2026 17:50:54 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Account with ID 99 not found\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+            }
+          ]
+        },
+        {
+          "name": "create account",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4NjYzNzk1MCwiZXhwIjoxNzg2NjQxNTUwfQ.L7_khct3GE3PqKV4JHQt2O_DtYyMA4FnAIO-e3jYZT4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"user_id\": 3,\r\n    \"name\": \"Tokocrypto\",\r\n    \"type\": \"bitcoin\",\r\n    \"balance\": 7000\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local_url}}/accounts",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "accounts"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 - created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"user_id\": 1,\r\n    \"name\": \"OVO\",\r\n    \"type\": \"e_wallet\",\r\n    \"balance\": 7000\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/accounts",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "accounts"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "125"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"7d-PhFHssj2VRkm6O6TMSi28Gmmrmk\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 05 Aug 2026 05:11:18 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 7,\n    \"user_id\": 1,\n    \"name\": \"OVO\",\n    \"type\": \"e_wallet\",\n    \"balance\": \"7000\",\n    \"created_at\": \"2026-08-05T05:11:17.964Z\",\n    \"users\": {\n        \"id\": 1\n    }\n}"
+            },
+            {
+              "name": "400 - bad request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"OVO\",\r\n    \"type\": \"e_wallet\",\r\n    \"balance\": 7000\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/accounts",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "accounts"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "119"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"77-Yr7hE5rlPfZa76OpHpJ0tWl56PU\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 05 Aug 2026 05:39:07 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": [\n        \"user_id must be a number conforming to the specified constraints\"\n    ],\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+            },
+            {
+              "name": "400 - invalid type",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"user_id\": 3,\r\n    \"name\": \"Tokocrypto\",\r\n    \"type\": \"bitcoin\",\r\n    \"balance\": 7000\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/accounts",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "accounts"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "35"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "117"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"75-HsS/90bnpiUJxk0SLteKn8gpmRs\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Thu, 13 Aug 2026 16:24:48 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": [\n        \"type must be one of the following values: cash, bank, e_wallet\"\n    ],\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+            }
+          ]
+        },
+        {
+          "name": "delete account",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"user_id\": 1,\r\n    \"name\": \"Mandiri Bank\",\r\n    \"type\": \"bank\",\r\n    \"balance\": 5000\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/accounts/99",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "accounts",
+                "99"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - deleted",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"user_id\": 1,\r\n    \"name\": \"Mandiri Bank\",\r\n    \"type\": \"bank\",\r\n    \"balance\": 5000\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/accounts/7",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "7"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "50"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"32-ebzOPuDgr0QklhOxc75NGHYRWbk\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 05 Aug 2026 17:01:47 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"messageL\": \"Account deleted\",\n    \"status\": 203,\n    \"id\": 7\n}"
+            },
+            {
+              "name": "404 - id not found",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"user_id\": 1,\r\n    \"name\": \"Mandiri Bank\",\r\n    \"type\": \"bank\",\r\n    \"balance\": 5000\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/accounts/99",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "accounts",
+                    "99"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "73"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"49-V1L6CLbOVWp5w1+6gIyTYlIiI0A\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 05 Aug 2026 17:02:03 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"This account not found\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "categories",
+      "item": [
+        {
+          "name": "get all",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4NjY5MzU5MSwiZXhwIjoxNzg2Njk3MTkxfQ.8wNTFgkLJPnuBclYXuNjfYT6izYxF-OoEt6p9OCc64A",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local_url}}/categories",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "categories"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - list",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local_url}}/categories",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "categories"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "14"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "422"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"1a6-S8C9VvZXZN1hoV7xExDCSNYvlRk\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 14 Aug 2026 07:46:58 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"id\": 1,\n        \"name\": \"Salary\",\n        \"type\": \"income\"\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Freelance\",\n        \"type\": \"income\"\n    },\n    {\n        \"id\": 3,\n        \"name\": \"Food & Beverage\",\n        \"type\": \"expense\"\n    },\n    {\n        \"id\": 4,\n        \"name\": \"Transportation\",\n        \"type\": \"expense\"\n    },\n    {\n        \"id\": 5,\n        \"name\": \"Shopping\",\n        \"type\": \"expense\"\n    },\n    {\n        \"id\": 6,\n        \"name\": \"Entertainment\",\n        \"type\": \"expense\"\n    },\n    {\n        \"id\": 7,\n        \"name\": \"Healthcare\",\n        \"type\": \"expense\"\n    },\n    {\n        \"id\": 9,\n        \"name\": \"uang bapak\",\n        \"type\": \"income\"\n    },\n    {\n        \"id\": 10,\n        \"name\": \"uang ibu negara\",\n        \"type\": \"income\"\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "get one account",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/categories/99",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "categories",
+                "99"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - one category",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local_url}}/categories/2",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "categories",
+                    "2"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "43"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "43"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"2b-8CjAIaMwDkEK8iezsYXT2DRdLWg\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 14 Aug 2026 07:53:22 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 2,\n    \"name\": \"Freelance\",\n    \"type\": \"income\"\n}"
+            },
+            {
+              "name": "404 - not found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local_url}}/categories/99",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "categories",
+                    "99"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "55"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "80"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"50-kQlllqxF2xKpTKCczMyKOlHmNZQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 14 Aug 2026 07:55:43 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Category with ID 99 not found\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+            }
+          ]
+        },
+        {
+          "name": "create category",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4NjE3MDQyOCwiZXhwIjoxNzg2MTc0MDI4fQ.dRCHykRtcl4e93djFsPNKuKVRC6MHbXfhQ4QOyKQSCg",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n   \"name\": \"uang ibu negara\",\r\n   \"type\": \"income\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/categories",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "categories"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 - created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n   \"name\": \"uang bapak\",\r\n   \"type\": \"income\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/categories",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "categories"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "44"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"2c-xfqxRD1YnnQq2WF6k4BJ1qzStJg\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 08 Aug 2026 05:57:16 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 9,\n    \"name\": \"uang bapak\",\n    \"type\": \"income\"\n}"
+            },
+            {
+              "name": "403 - forbidden/not admin",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n   \"name\": \"uang bapak\",\r\n   \"type\": \"income\"\r\n\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/categories",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "categories"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "69"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"45-MZJWZc+Y+RUbHpnhz2B2Vipii24\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 08 Aug 2026 05:49:14 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Forbidden resource\",\n    \"error\": \"Forbidden\",\n    \"statusCode\": 403\n}"
+            },
+            {
+              "name": "400 - invalid type",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"uang mamah\",\r\n    \"type\": \"jajan\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/categories",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "categories"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "112"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"70-UIZuoi5H6VB6/VAWC7eJPyq0HHk\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 14 Aug 2026 08:22:17 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": [\n        \"type must be one of the following values: income, expense\"\n    ],\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+            }
+          ]
+        },
+        {
+          "name": "update",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4NjY5NzkwMSwiZXhwIjoxNzg2NzAxNTAxfQ.NEj_3ZTVxgVQOB_xQOgPpmVMaP8z131RUvPZXSvWIGc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Mother's money\"\r\n}"
+            },
+            "url": {
+              "raw": "{{local_url}}/categories/10",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "categories",
+                "10"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - updated (admin)",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Mother's money\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/categories/10",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "categories",
+                    "10"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "49"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"31-U4jDU9nXCMtN6xyAr8+nh+4cvrY\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 14 Aug 2026 09:50:41 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": 10,\n    \"name\": \"Mother's money\",\n    \"type\": \"income\"\n}"
+            },
+            {
+              "name": "403 - forbidden access",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Mother's money\"\r\n}"
+                },
+                "url": {
+                  "raw": "{{local_url}}/categories/10",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "categories",
+                    "10"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "69"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"45-MZJWZc+Y+RUbHpnhz2B2Vipii24\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Fri, 14 Aug 2026 08:57:40 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Forbidden resource\",\n    \"error\": \"Forbidden\",\n    \"statusCode\": 403\n}"
+            }
+          ]
+        },
+        {
+          "name": "delete category",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzg2NzkwODU5LCJleHAiOjE3ODY3OTQ0NTl9.Nad1MF91tZ6DIV44o1Dux1JEGyYG8NSzTITZRASEaM4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{local_url}}/categories/9",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "categories",
+                "9"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - deleted (admin)",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/categories/8",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "categories",
+                    "8"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "X-Powered-By",
+                  "value": "Express"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "50"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"32-lzHZCw+9np2Bcy+buFl3kl9srKU\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Wed, 05 Aug 2026 17:37:51 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Category deleted\",\n    \"status\": 203,\n    \"id\": 8\n}"
+            },
+            {
+              "name": "403 - not admin",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{local_url}}/categories/9",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "categories",
+                    "9"
+                  ]
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "69"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"45-MZJWZc+Y+RUbHpnhz2B2Vipii24\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sat, 15 Aug 2026 10:48:09 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Forbidden resource\",\n    \"error\": \"Forbidden\",\n    \"statusCode\": 403\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "transactions",
+      "item": [
+        {
+          "name": "get all",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzg2ODkwNzQ2LCJleHAiOjE3ODY4OTQzNDZ9.iD6dbmG8DdShFLwVk-30-7JDeS2E74DQd2A0hPrBkJU",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{local_url}}/transactions",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "transactions"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - list (milik sendiri)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local_url}}/transactions",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "transactions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "1297"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"511-CLXxUEopLBSmrsdJ4LIzOnoL50Q\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 16 Aug 2026 14:47:52 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"id\": \"1\",\n        \"account_id\": 2,\n        \"category_id\": 1,\n        \"type\": \"income\",\n        \"amount\": \"5000\",\n        \"description\": \"Monthly Salary\",\n        \"transaction_date\": \"2026-07-01T00:00:00.000Z\",\n        \"created_at\": \"2026-08-03T07:49:37.786Z\"\n    },\n    {\n        \"id\": \"2\",\n        \"account_id\": 2,\n        \"category_id\": 2,\n        \"type\": \"income\",\n        \"amount\": \"800\",\n        \"description\": \"Website Project\",\n        \"transaction_date\": \"2026-07-05T00:00:00.000Z\",\n        \"created_at\": \"2026-08-03T07:49:37.786Z\"\n    },\n    {\n        \"id\": \"3\",\n        \"account_id\": 2,\n        \"category_id\": 3,\n        \"type\": \"expense\",\n        \"amount\": \"120\",\n        \"description\": \"Lunch\",\n        \"transaction_date\": \"2026-07-06T00:00:00.000Z\",\n        \"created_at\": \"2026-08-03T07:49:37.786Z\"\n    },\n    {\n        \"id\": \"4\",\n        \"account_id\": 2,\n        \"category_id\": 4,\n        \"type\": \"expense\",\n        \"amount\": \"40\",\n        \"description\": \"Taxi\",\n        \"transaction_date\": \"2026-07-08T00:00:00.000Z\",\n        \"created_at\": \"2026-08-03T07:49:37.786Z\"\n    },\n    {\n        \"id\": \"5\",\n        \"account_id\": 1,\n        \"category_id\": 5,\n        \"type\": \"expense\",\n        \"amount\": \"250\",\n        \"description\": \"New Headset\",\n        \"transaction_date\": \"2026-07-10T00:00:00.000Z\",\n        \"created_at\": \"2026-08-03T07:49:37.786Z\"\n    },\n    {\n        \"id\": \"6\",\n        \"account_id\": 1,\n        \"category_id\": 6,\n        \"type\": \"expense\",\n        \"amount\": \"75\",\n        \"description\": \"Cinema\",\n        \"transaction_date\": \"2026-07-12T00:00:00.000Z\",\n        \"created_at\": \"2026-08-03T07:49:37.786Z\"\n    },\n    {\n        \"id\": \"7\",\n        \"account_id\": 2,\n        \"category_id\": 3,\n        \"type\": \"expense\",\n        \"amount\": \"65\",\n        \"description\": \"Dinner\",\n        \"transaction_date\": \"2026-07-15T00:00:00.000Z\",\n        \"created_at\": \"2026-08-03T07:49:37.786Z\"\n    }\n]"
+            }
+          ]
+        },
+        {
+          "name": "get id",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": [
+            {
+              "name": "200 - one",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local_url}}/transactions/1",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "transactions",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "190"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"be-5pVT+OLeoyxhXjdINuM37eAIHwQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Sun, 16 Aug 2026 14:50:02 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"1\",\n    \"account_id\": 2,\n    \"category_id\": 1,\n    \"type\": \"income\",\n    \"amount\": \"5000\",\n    \"description\": \"Monthly Salary\",\n    \"transaction_date\": \"2026-07-01T00:00:00.000Z\",\n    \"created_at\": \"2026-08-03T07:49:37.786Z\"\n}"
+            },
+            {
+              "name": "404 - not yours",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{local_url}}/transactions/8",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "transactions",
+                    "8"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "72"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"48-4hbH15JtmfNpmqB6IzTdC8wJMKM\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 17 Aug 2026 15:41:07 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Transaction not found\",\n    \"error\": \"Not Found\",\n    \"statusCode\": 404\n}"
+            }
+          ]
+        },
+        {
+          "name": "create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/transactions",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "transactions"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "201 - created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"account_id\": 2,\r\n    \"category_id\": 3,\r\n    \"type\": \"expense\",\r\n    \"amount\": \"2000\",\r\n    \"description\": \"beli cilok\",\r\n    \"transaction_date\": \"2020-08-17\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/transactions",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "transactions"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "386"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"182-qs+P5roYgFXY80GoTgyNfZTUxVs\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 17 Aug 2026 16:08:52 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n    {\n        \"id\": \"24\",\n        \"account_id\": 2,\n        \"category_id\": 3,\n        \"type\": \"expense\",\n        \"amount\": \"2000\",\n        \"description\": \"beli cilok\",\n        \"transaction_date\": \"2020-08-17T00:00:00.000Z\",\n        \"created_at\": \"2026-08-17T16:08:52.285Z\",\n        \"accounts\": {\n            \"balance\": \"5500\"\n        },\n        \"categories\": {\n            \"name\": \"Food & Beverage\",\n            \"type\": \"expense\"\n        }\n    },\n    {\n        \"id\": 2,\n        \"user_id\": 1,\n        \"name\": \"Blu BCA\",\n        \"type\": \"bank\",\n        \"balance\": \"3500\",\n        \"created_at\": \"2026-08-03T07:49:37.363Z\"\n    }\n]"
+            },
+            {
+              "name": "400 - negative amount",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"account_id\": 2,\r\n    \"category_id\": 3,\r\n    \"type\": \"expense\",\r\n    \"amount\": \"-500\",\r\n    \"description\": \"beli cilok\",\r\n    \"transaction_date\": \"2020-08-17\",\r\n    \"foo\": 1\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/transactions",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "transactions"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "85"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"55-aZwg5qG5YjxfrjWZzUroneuQ9nk\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 17 Aug 2026 16:23:22 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": \"Amount must be greater than zero\",\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+            },
+            {
+              "name": "400 - unknown fields",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"account_id\": 2,\r\n    \"category_id\": 3,\r\n    \"type\": \"expense\",\r\n    \"amount\": \"500\",\r\n    \"description\": \"beli cilok\",\r\n    \"transaction_date\": \"2020-08-17\",\r\n    \"foo\": 1\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/transactions",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "transactions"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "4"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "60"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "84"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"54-Xp1OOk5ljr/cy9bIJcM/qPsrObQ\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 17 Aug 2026 16:25:31 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"message\": [\n        \"property foo should not exist\"\n    ],\n    \"error\": \"Bad Request\",\n    \"statusCode\": 400\n}"
+            }
+          ]
+        },
+        {
+          "name": "update trans",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzg2OTgxMDIyLCJleHAiOjE3ODY5ODQ2MjJ9.OfaLDLtlrdy--n4NL_BeZozAOeoClvOrTNz7kJXnki4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"amount\": \"1000\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{local_url}}/transactions/26",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "transactions",
+                "26"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - balance recalculated",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"amount\": \"1000\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{local_url}}/transactions/26",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "transactions",
+                    "26"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "52"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "275"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"113-bQDGlr0i8DSYJ9bWxvRve9U1vSY\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 17 Aug 2026 16:30:54 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"id\": \"26\",\n    \"account_id\": 2,\n    \"category_id\": 3,\n    \"type\": \"expense\",\n    \"amount\": \"1000\",\n    \"description\": \"beli cilok\",\n    \"transaction_date\": \"2020-08-17T00:00:00.000Z\",\n    \"created_at\": \"2026-08-17T16:30:08.395Z\",\n    \"accounts\": {\n        \"balance\": \"4500\"\n    },\n    \"categories\": {\n        \"name\": \"Food & Beverage\",\n        \"type\": \"expense\"\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "deleteTransaction",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Njk4NDc4NCwiZXhwIjoxNzg2OTg4Mzg0fQ.Lfz1A74Iy5Cy_vIlvvWSb0csauV_JwUWJZki6XjWogw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{local_url}}/transactions/26",
+              "host": [
+                "{{local_url}}"
+              ],
+              "path": [
+                "transactions",
+                "26"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "200 - deleted, balance reverted",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{local_url}}/transactions/22",
+                  "host": [
+                    "{{local_url}}"
+                  ],
+                  "path": [
+                    "transactions",
+                    "22"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": "Content-Security-Policy",
+                  "value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+                },
+                {
+                  "key": "Cross-Origin-Opener-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Cross-Origin-Resource-Policy",
+                  "value": "same-origin"
+                },
+                {
+                  "key": "Origin-Agent-Cluster",
+                  "value": "?1"
+                },
+                {
+                  "key": "Referrer-Policy",
+                  "value": "no-referrer"
+                },
+                {
+                  "key": "Strict-Transport-Security",
+                  "value": "max-age=31536000; includeSubDomains"
+                },
+                {
+                  "key": "X-Content-Type-Options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "X-DNS-Prefetch-Control",
+                  "value": "off"
+                },
+                {
+                  "key": "X-Download-Options",
+                  "value": "noopen"
+                },
+                {
+                  "key": "X-Frame-Options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "X-Permitted-Cross-Domain-Policies",
+                  "value": "none"
+                },
+                {
+                  "key": "X-XSS-Protection",
+                  "value": "0"
+                },
+                {
+                  "key": "Vary",
+                  "value": "Origin"
+                },
+                {
+                  "key": "Access-Control-Allow-Credentials",
+                  "value": "true"
+                },
+                {
+                  "key": "X-RateLimit-Limit",
+                  "value": "5"
+                },
+                {
+                  "key": "X-RateLimit-Remaining",
+                  "value": "3"
+                },
+                {
+                  "key": "X-RateLimit-Reset",
+                  "value": "1"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "Content-Length",
+                  "value": "333"
+                },
+                {
+                  "key": "ETag",
+                  "value": "W/\"14d-jr6Cd37/psqaQ33ZSbcAHoY2W8M\""
+                },
+                {
+                  "key": "Date",
+                  "value": "Mon, 17 Aug 2026 16:40:08 GMT"
+                },
+                {
+                  "key": "Connection",
+                  "value": "keep-alive"
+                },
+                {
+                  "key": "Keep-Alive",
+                  "value": "timeout=5"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"deleted\": {\n        \"id\": \"22\",\n        \"account_id\": 5,\n        \"category_id\": 4,\n        \"type\": \"expense\",\n        \"amount\": \"20\",\n        \"description\": \"Parking Fee\",\n        \"transaction_date\": \"2026-07-18T00:00:00.000Z\",\n        \"created_at\": \"2026-08-03T07:49:37.786Z\",\n        \"accounts\": {\n            \"user_id\": 3,\n            \"name\": \"Cash Wallet\",\n            \"balance\": \"500\"\n        }\n    },\n    \"newBalance\": \"520\",\n    \"message\": \"Transaction deleted\",\n    \"status\": 203,\n    \"id\": 22\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}

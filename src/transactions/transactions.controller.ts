@@ -4,11 +4,13 @@ import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth-guard';
 import { CurrentUser } from 'src/auth/current-user.decorator';
+import { Roles } from 'src/auth/roles.decorator';
 
 @UseGuards(JwtAuthGuard)
 @Controller('transactions')
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
+
   @Get()
   getAllTransactions(@CurrentUser() user: { sub: number }) {
     return this.transactionsService.getAllTransactions(user.sub);

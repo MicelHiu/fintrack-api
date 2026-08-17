@@ -3,7 +3,8 @@ import { accounts_type } from "generated/prisma/client";
 
 export class UpdateAccountDto {
     @IsNumber()
-    user_id!: number;
+    @IsOptional()
+    user_id?: number;
     
     @IsString()
     @MaxLength(255)

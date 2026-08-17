@@ -113,6 +113,8 @@ export class TransactionsRepository {
     ]);
 
     return {
+        deleted,
+        newBalance,
         message: 'Transaction deleted',
         status: 203,
         id,

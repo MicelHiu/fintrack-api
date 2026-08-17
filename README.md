@@ -34,7 +34,7 @@ npm run start
 ```
 ---
 ## ERD
-![ERD](img/ERD.png)
+![ERD](docs/ERD.png)
 ---
 ## ARCHITECTURE OVERVIEW
 
@@ -43,6 +43,6 @@ npm run start
 ## TECH STACK
 - Framework: Nest.js, Prisma
 - Database: PostgreSQL
-- Deployments: Railway, Supabase
+- Deployments: Railway, Supabase, Postman
 - Link: milestone-4-micelhiu-production.up.railway.app
-- Link API: 
+- Link API: https://documenter.getpostman.com/view/56609845/2sBY4VLJ7Z 

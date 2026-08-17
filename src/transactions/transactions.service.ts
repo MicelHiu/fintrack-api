@@ -18,7 +18,7 @@ export class TransactionsService {
 
     async getTransactionById(id: number, userId: number) {
         const data = await this.transactionsRepository.getTransactionById(id, userId);
-        if (!data) throw new NotFoundException(`transaction not found`);
+        if (!data) throw new NotFoundException(`Transaction not found`);
         return data;
     }
 
@@ -32,6 +32,10 @@ export class TransactionsService {
             throw new BadRequestException(
                 'Transactione type does not match category type'
             )
+        }
+
+        if (new Decimal(dto.amount).lessThanOrEqualTo(0)) {
+            throw new BadRequestException('Amount must be greater than zero');
         }
 
         if ((dto.type === "expense" || dto.type === "transfer") && account.balance.lessThan(dto.amount)) {
@@ -66,6 +70,10 @@ export class TransactionsService {
 
         if ((newType === "expense" || newType === "transfer") && restoredBalance.lessThan(newAmount)) {
             throw new BadRequestException('Account balance is not enough');
+        }
+
+        if(new Decimal(newAmount).lessThanOrEqualTo(0)) {
+            throw new BadRequestException('Amount must be greater than zero')
         }
 
         const newBalance = this.balanceCalculator.apply(restoredBalance, newType, newAmount);
