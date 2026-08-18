@@ -26,6 +26,17 @@ export class AccountsService {
         return this.accountsRepository.getAccountByUserId(userId);
     }
 
+    async getAccountTransactions(id: number, userId?: number) {
+        const account = await this.accountsRepository.getAccountById(id);
+        if(!account) {
+            throw new NotFoundException(`Account with ID ${id} not found`);
+        }
+        if(userId && account.user_id !== userId) {
+            throw new NotFoundException(`Account with ID ${id} not found`);
+        }
+        return this.accountsRepository.getAccountTransactions(id);
+    }
+
     async createAccount(sub: number, dto: CreateAccountDto) {
         const user_id = await this.accountsRepository.getUserId(sub);
         if(!user_id) {

@@ -44,5 +44,5 @@ npm run start
 - Framework: Nest.js, Prisma
 - Database: PostgreSQL
 - Deployments: Railway, Supabase, Postman
-- Link: milestone-4-micelhiu-production.up.railway.app
-- Link API: https://documenter.getpostman.com/view/56609845/2sBY4VLJ7Z 
+- Link Production: [railway production](fintrack-api-production-307f.up.railway.app) 
+- Link API: [postman collection](https://documenter.getpostman.com/view/56609845/2sBY4VLJ7Z) 

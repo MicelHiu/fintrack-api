@@ -33,6 +33,16 @@ export class AccountsRepository {
         });
     }
 
+    getAccountTransactions(accountId: number) {
+        return this.prisma.transactions.findMany({
+            where: { account_id: accountId },
+            include: {
+                categories: true,
+            },
+            orderBy: { transaction_date: 'desc' },
+        });
+    }
+
     createAccount(data: {
         user_id: number;
         name: string;
@@ -66,7 +76,7 @@ export class AccountsRepository {
 
         if(deleted) {
             return { 
-                messageL: 'Account deleted',
+                message: 'Account deleted',
                 status: 203,
                 id: id,
             };

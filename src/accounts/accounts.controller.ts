@@ -27,6 +27,11 @@ export class AccountsController {
       return this.accountsService.getAccountByUserId(user.sub);
     }
 
+    @Get(':id/transactions')
+    getAccountTransactions(@Param('id', ParseIntPipe) id: number, @CurrentUser() user: {sub: number}) {
+      return this.accountsService.getAccountTransactions(id, user.sub);
+    }
+
     @Post()
     createAccount(@CurrentUser() user: { sub: number }, @Body()dto: CreateAccountDto) {
       return this.accountsService.createAccount(user.sub, dto);
