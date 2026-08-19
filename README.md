@@ -12,7 +12,7 @@ npm install
 ```bash
 DATABASE_URL="postgresql://postgres.vanvnwbnhpcyotzvcxsp:<your password>@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres"
 JWT_SECRET="F1ntrack_ap1"
-
+```
 copy ".env.example" to ".env" file
 ```bash
 cp .env.example .env
@@ -38,23 +38,22 @@ npm run start
 ---
 ## ARCHITECTURE OVERVIEW
 ### Layered structure
-Setiap domain (`accounts`, `transactions`, `categories`, `users`, `auth`) mengikuti pola 3 layer NestJS yang sama:
-
+Setiap domain (accounts, transactions, categories, users, auth) mengikuti pola 3 layer NestJS yang sama:
 Controller  → menerima HTTP request, validasi DTO, delegasi ke Service
 Service     → business logic (cek kepemilikan resource, hitung balance, dsb)
 Repository  → satu-satunya layer yang bicara ke Prisma / database
 
-Controller tidak pernah panggil Prisma langsung — selalu lewat Service → Repository. Ini bikin logic query gampang diganti tanpa nyentuh HTTP layer.
+Controller tidak memanggil Prisma langsung. Pemanggilan dilakukan melalui Service → Repository. Hal ini membuat logic query mudah diperbaiki tanpa menyentuh HTTP layer.
 
 ### Modules
 | Module | Tanggung jawab |
 |---|---|
-| `AuthModule` | register/login, JWT issuing, menyimpan `JwtAuthGuard` & `RolesGuard` supaya bisa diexport ke module lain |
-| `UsersModule` | CRUD data user |
-| `AccountsModule` | rekening milik user, validasi kepemilikan (`user_id` harus match token) |
-| `TransactionsModule` | CRUD transaksi + `BalanceCalculatorService` untuk hitung saldo berjalan |
-| `CategoriesModule` | master data kategori transaksi |
-| `PrismaModule` | wrap `PrismaService`, di-import di semua module yang butuh akses DB |
+| AuthModule | register/login, JWT issuing, menyimpan JwtAuthGuard & RolesGuard supaya bisa diexport ke module lain |
+| UsersModule | CRUD data user |
+| AccountsModule | rekening milik user, validasi kepemilikan (user_id harus match token) |
+| TransactionsModule | CRUD transaksi + BalanceCalculatorService untuk hitung saldo berjalan |
+| CategoriesModule | master data kategori transaksi |
+| PrismaModule | wrap PrismaService, di-import di semua module yang butuh akses DB |
 
 ### Request pipeline
 Request
@@ -64,18 +63,16 @@ Request
   → RolesGuard (route tertentu — cek req.user.role vs @Roles() metadata)
   → Controller → Service → Repository → Prisma → PostgreSQL (Supabase)
 
-> Catatan: `RolesGuard` baru dipasang eksplisit di beberapa route `CategoriesController`. Di `AccountsController`, `@Roles('admin')` sudah ditulis tapi `RolesGuard`-nya belum di-`@UseGuards`, jadi decorator itu belum efektif — perlu disamakan.
-
 ### Auth
-- `JwtAuthGuard` membaca header `Authorization: Bearer <token>`, verify pakai `JwtService`, lalu inject payload ke `req.user` (dipakai lewat `@CurrentUser()` decorator).
-- Role-based access pakai `@Roles('admin')` (metadata) + `RolesGuard` (pembaca metadata via `Reflector`).
+- JwtAuthGuard membaca header Authorization: Bearer <token>, verify menggunakan JwtService, lalu inject payload ke req.user (dipakai lewat @CurrentUser() decorator).
+- Role-based access pakai @Roles('admin') (metadata) + RolesGuard (pembaca metadata via Reflector).
 
 ### Database
-- Schema didefinisikan di `prisma/schema.prisma`, akses lewat `PrismaService` (wrapper `PrismaClient`) yang di-inject ke tiap `*.repository.ts`.
-- Relasi utama: `users 1—N accounts 1—N transactions N—1 categories`.
+- Schema didefinisikan di prisma/schema.prisma, akses lewat PrismaService (wrapper PrismaClient) yang di-inject ke tiap *.repository.ts.
+- Relasi utama: users 1—N accounts 1—N transactions N—1 categories.
 
 ## KNOWN LIMITATIONS
-- **Tidak ada pagination.** `GET /accounts`, `GET /transactions`, `GET /categories` mengembalikan seluruh baris (`findMany()` tanpa `take`/`skip`) — akan jadi masalah begitu data bertambah.
+- **Tidak ada pagination.** GET /accounts, GET /transactions, GET /categories mengembalikan seluruh baris (findMany() tanpa take/skip) — akan jadi masalah begitu data bertambah.
 
 ## TECH STACK
 - Framework: Nest.js, Prisma
