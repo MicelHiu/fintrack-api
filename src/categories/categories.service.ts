@@ -28,8 +28,8 @@ export class CategoriesService {
         return this.categoriesRepository.updateCategory(dto, id);
     }
 
-    deleteCategory(id: number) {
-        const category = this.categoriesRepository.getCategoryById(id);
+    async deleteCategory(id: number) {
+        const category = await this.categoriesRepository.getCategoryById(id);
         if(!category) throw new NotFoundException(`Category not found`);
         return this.categoriesRepository.deleteCategory(id);
     }

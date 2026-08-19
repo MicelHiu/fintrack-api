@@ -35,8 +35,7 @@ import { APP_GUARD } from '@nestjs/core';
     AuthService, 
     AuthRepository, 
     JwtAuthGuard, 
-    RolesGuard, 
-    { provide: APP_GUARD, useClass: ThrottlerGuard },
+    RolesGuard,
   ],
   exports: [AuthService, JwtAuthGuard, RolesGuard, JwtModule],
 })

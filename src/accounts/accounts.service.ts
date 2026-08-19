@@ -53,6 +53,9 @@ export class AccountsService {
     async updateAccount(dto: UpdateAccountDto, id: number, userId: number) {
         const accountId = await this.accountsRepository.getAccountById(id);
         if(!accountId) throw new NotFoundException(`Account with ID ${id} not found`);
+        if (accountId.user_id !== userId) {
+            throw new NotFoundException('Account with ID ${id} not found');
+        }
 
         const updated = await this.accountsRepository.updateAccount(dto, id);
         if(!updated) throw new NotFoundException(`update failed`);
@@ -60,6 +63,10 @@ export class AccountsService {
     }
 
     async deleteAccount(id: number, userId: number) {
+        if (id !== userId) {
+            throw new NotFoundException('Account with ID ${id} not found');
+        }
+
         const deleted = await this.accountsRepository.getAccountById(id);
         if(!deleted) throw new NotFoundException(`This account not found`);
         return this.accountsRepository.deleteAccount(id);

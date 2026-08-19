@@ -66,7 +66,12 @@ export class AccountsRepository {
             data: dto,
             where: { id },
             include: {
-                users: true,
+                users: {
+                    select: {
+                        id: true,
+                        name: true,
+                    }
+                },
             },
         });
     }

@@ -10,7 +10,7 @@ import { Roles } from 'src/auth/roles.decorator';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
   @Get()
   getAllUsers(@CurrentUser() user: { sub: number }) {
@@ -23,21 +23,21 @@ export class UsersController {
     return this.usersService.getUserById(user.sub);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
   @Get(":id")
   getUserById(@Param('id', ParseIntPipe) id: number, @CurrentUser() user: { sub: number }) {
     return this.usersService.getUserById(id, user.sub);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
   @Post()
   createUser(@Body() dto: CreateUserDto) {
     return this.usersService.createUser(dto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin')
   @Delete(':id')
   deleteUser(@Param('id', ParseIntPipe) id: number, @CurrentUser() user: { sub: number }) {
