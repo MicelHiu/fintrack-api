@@ -20,7 +20,7 @@
 | 7 | `/transactions` | POST body `amount: -1000` | 400, pesan `amount must be a positive number` | ✅ | |
 | 8 | `/transactions` body field asing `foo` | POST | 400 (`forbidNonWhitelisted`) | ✅ | |
 | 9 | `/accounts/1/transactions` | GET | 200, tiap item punya objek `category` bersarang | ✅ | bukti `include` |
-| 10 | `/transactions/27` | DELETE | 204, membersihkan data uji dari langkah 6 | ✅ | |
+| 10 | `/transactions/27` | DELETE | 200, membersihkan data uji dari langkah 6 | ✅ | |
 
 ## Kesimpulan
 
