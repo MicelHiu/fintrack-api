@@ -63,12 +63,13 @@ export class AccountsService {
     }
 
     async deleteAccount(id: number, userId: number) {
-        if (id !== userId) {
-            throw new NotFoundException('Account with ID ${id} not found');
+        const account = await this.accountsRepository.getAccountById(id);
+        if(!account) {
+            throw new NotFoundException(`This account not found`);
         }
-
-        const deleted = await this.accountsRepository.getAccountById(id);
-        if(!deleted) throw new NotFoundException(`This account not found`);
+        if(account.user_id !== userId) {
+            throw new NotFoundException(`Account with ID ${id} not found`); 
+        }
         return this.accountsRepository.deleteAccount(id);
     }
 }
