@@ -10,13 +10,13 @@
 
 Seluruh endpoint kecuali /auth/register dan /auth/login butuh header Authorization: Bearer <TOKEN>.
 Ganti <TOKEN> dengan access_token dari hasil login. Endpoint bertanda (admin) butuh token dengan role admin.
---
+
+---
 ## Auth
 ### POST /auth/login
 ```bash
 curl --location 'http://localhost:3000/auth/login' \
 --header 'Content-Type: application/json' \
---header 'Authorization: Bearer <TOKEN>' \
 --data-raw '{
     "email": "cindy@example.com",
     "password": "password123"
@@ -28,16 +28,15 @@ Response 200 - token issued:
     "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzg2MzU1MDA1LCJleHAiOjE3ODYzNTg2MDV9.tpEAG4X9seLqfTXTgRlaymsvfZ5gTYCbaevgh4xCkCY"
 }
 ```
-Response 401 - invalid credentials:
+Response 401 - invalid credentials, ketika email/password yang diinput tidak terdaftar atau salah password/email :
 ```json
-json
 {
     "message": "Invalid credentials",
     "error": "Unauthorized",
     "statusCode": 401
 }
 ```
-Response 429 - too many request:
+Response 429 - too many request, ketika dilakukan spam login 5x berturut-turut:
 ```json
 {
     "statusCode": 429,
@@ -48,7 +47,6 @@ Response 429 - too many request:
 ```bash
 curl --location 'http://localhost:3000/auth/register' \
 --header 'Content-Type: application/json' \
---header 'Authorization: Bearer <TOKEN>' \
 --data '{
     "name": "Micel",
     "email": "micel@gmail.com",
@@ -66,7 +64,7 @@ Response 201 - registered:
     "created_at": "2026-08-08T03:41:20.621Z"
 }
 ```
-Reponse 409 - email already registered:
+Response 409 - email already registered:
 ```json
 {
     "message": "Email already registered",
@@ -74,7 +72,7 @@ Reponse 409 - email already registered:
     "statusCode": 409
 }
 ```
-Response 400 - invalid email:
+Response 400 - invalid email (email tidak sesuai dengan format email pada umumnya):
 ```json
 {
     "message": [
@@ -92,7 +90,7 @@ Response 400 - invalid email:
 curl --location 'http://localhost:3000/users/current' \
 --header 'Authorization: Bearer <TOKEN>'
 ```
-Reponse 200 - current user:
+Response 200 - current user:
 ```json
 {
     "id": 3,
@@ -207,18 +205,12 @@ Response 200 - OK:
     ]
 }
 ```
-Response 404 - not found:
+Response 404 - not found, ketika id yang diinput tidak ada di database:
 ```json
 {
-    "response": {
-        "message": "User with id 99 not found",
-        "error": "Not Found",
-        "statusCode": 404
-    },
-    "status": 404,
-    "options": {},
     "message": "User with id 99 not found",
-    "name": "NotFoundException"
+    "error": "Not Found",
+    "statusCode": 404
 }
 ```
 ### POST /users (admin)
@@ -243,7 +235,7 @@ Response 201 - created:
     "created_at": "2026-08-11T16:22:46.170Z"
 }
 ```
-Response 400 - invalid email:
+Response 400 - invalid email, ketika email yang dimasukkan tidak dalam format email:
 ```json
 {
     "message": [
@@ -266,7 +258,7 @@ Response 200 - user deleted:
     "id": 10
 }
 ```
-Response 404 - id not found:
+Response 404 - id not found, ketika id yang dimasukkan tidak ada di database:
 ```json
 {
     "message": "Id not found",
@@ -335,7 +327,7 @@ Response 200 - list:
     }
 ]
 ```
-Response 401 - unauthorized:
+Response 401 - unauthorized, ketika token yang dimasukkan di authorization bukan merupakan token admin:
 ```json
 {
     "message": "No token provided",
@@ -345,7 +337,7 @@ Response 401 - unauthorized:
 ```
 ### GET /accounts/{id} (admin)
 ```bash
-curl --location 'http://localhost:3000/accounts/99' \
+curl --location 'http://localhost:3000/accounts/1' \
 --header 'Authorization: Bearer <TOKEN>'
 ```
 Response 200 - OK:
@@ -359,7 +351,7 @@ Response 200 - OK:
     "created_at": "2026-08-03T07:49:37.363Z"
 }
 ```
-Response 404 - not found:
+Response 404 - not found, ketika id yang dimasukkan tidak ada di database (misalnya 99):
 ```json
 {
     "message": "Account with ID 99 not found",
@@ -372,7 +364,7 @@ Response 404 - not found:
 curl --location 'http://localhost:3000/accounts/current' \
 --header 'Authorization: Bearer <TOKEN>'
 ```
-Response 200 - personal account:
+Response 200 - personal account (akun yang login):
 ```json
 [
     {
@@ -395,7 +387,7 @@ Response 200 - personal account:
 ```
 ### GET /accounts/{id}/transactions
 ```bash
-curl --location 'http://localhost:3000 /accounts/5/transactions' \
+curl --location 'http://localhost:3000/accounts/5/transactions' \
 --header 'Authorization: Bearer <TOKEN>'
 ```
 Response 200 - OK:
@@ -444,7 +436,7 @@ curl --location 'http://localhost:3000/accounts' \
     "balance": 7000
 }'
 ```
-Response 201 - created:
+Response 201 - created, user_id didapat dari token yang diinput:
 ```json
 {
     "id": 7,
@@ -458,17 +450,18 @@ Response 201 - created:
     }
 }
 ```
-Response 400 - bad request:
+Response 400 - bad request, ketika salah satu dto tidak ada:
 ```json
 {
     "message": [
-        "user_id must be a number conforming to the specified constraints"
+        "name must be shorter than or equal to 255 characters",
+        "name must be a string"
     ],
     "error": "Bad Request",
     "statusCode": 400
 }
 ```
-Response 400 - invalid type:
+Response 400 - invalid type, ketika type yang diisi tidak sesuai enum database:
 ```json
 {
     "message": [
@@ -502,7 +495,7 @@ Response 200 - successfully updated:
     }
 }
 ```
-Response 404 - not found:
+Response 404 - not found, ketika id yang diisi tidak ada di database:
 ```json
 {
     "message": "Account with ID 99 not found",
@@ -518,12 +511,12 @@ curl --location --request DELETE 'http://localhost:3000/accounts/8' \
 Response 200 - deleted:
 ```json
 {
-    "messageL": "Account deleted",
+    "message": "Account deleted",
     "status": 203,
     "id": 8
 }
 ```
-Response 404 - id not found:
+Response 404 - id not found, ketika id yang dimasukkan tidak ada di database atau bukan merupakan akun pemilik token (akun orang lain):
 ```json
 {
     "message": "This account not found",
@@ -591,7 +584,7 @@ Response 200 - list:
 ```
 ### GET /categories/{id}
 ```bash
-curl --location 'http://localhost:3000/categories/99' \
+curl --location 'http://localhost:3000/categories/2' \
 --header 'Authorization: Bearer <TOKEN>'
 ```
 Response 200 - one category:
@@ -602,7 +595,7 @@ Response 200 - one category:
     "type": "income"
 }
 ```
-Response 404 - not found:
+Response 404 - not found, ketika id yang dimasukkan tidak ada di database:
 ```json
 {
     "message": "Category with ID 99 not found",
@@ -628,7 +621,7 @@ Response 201 - created:
     "type": "income"
 }
 ```
-Response 403 - forbidden access:
+Response 403 - forbidden access, ketika token yang dimasukkan bukan token admin:
 ```json
 {
     "message": "Forbidden resource",
@@ -636,7 +629,7 @@ Response 403 - forbidden access:
     "statusCode": 403
 }
 ```
-Response 400 - invalid type:
+Response 400 - invalid type, ketika type yang dimasukkan tidak mengikuti enum database:
 ```json
 {
     "message": [
@@ -663,7 +656,7 @@ Response 200 - updated:
     "type": "income"
 }
 ```
-Response 403 - forbidden access:
+Response 403 - forbidden access, ketika token user yang dimasukkan di header Authorization:
 ```json
 {
     "message": "Forbidden resource",
@@ -684,7 +677,7 @@ Response 200 - deleted:
     "id": 10
 }
 ```
-Response 403 - forbidden access:
+Response 403 - forbidden access, ketika token user yang dimasukkan di header Authorization:
 ```json
 {
     "message": "Forbidden resource",
@@ -777,7 +770,7 @@ Response 200 - list personal transactions:
 ```
 ### GET /transactions/{id}
 ```bash
-curl --location 'localhost:3000/transactions/99' \
+curl --location 'localhost:3000/transactions/1' \
 --header 'Authorization: Bearer <TOKEN>'
 ```
 Response 200 - one transactions:
@@ -793,7 +786,7 @@ Response 200 - one transactions:
     "created_at": "2026-08-03T07:49:37.786Z"
 }
 ```
-Response 404 - not found:
+Response 404 - not found, ketika id yang dimasukkan tidak ada di database (contoh: 99):
 ```json
 {
     "message": "Transaction not found",
@@ -825,7 +818,7 @@ Response 201 - created:
         "type": "expense",
         "amount": "2000",
         "description": "beli cilok",
-        "transaction_date": "2020-08-17T00:00:00.000Z",
+        "transaction_date": "2026-08-17T00:00:00.000Z",
         "created_at": "2026-08-17T16:08:52.285Z",
         "accounts": {
             "balance": "5500"
@@ -845,7 +838,7 @@ Response 201 - created:
     }
 ]
 ```
-Response 400 - negative amount:
+Response 400 - negative amount, ketika amount yang dimasukkan merupakan bilangan negatif:
 ```json
 {
     "message": "Amount must be greater than zero",
@@ -853,7 +846,7 @@ Response 400 - negative amount:
     "statusCode": 400
 }
 ```
-Response 400 - unknown fields:
+Response 400 - unknown fields, ketika terdapat input di luar dto:
 ```json
 {
     "message": [
