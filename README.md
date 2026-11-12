@@ -78,5 +78,5 @@ Request
 - Framework: Nest.js, Prisma
 - Database: PostgreSQL
 - Deployments: Railway, Supabase, Postman
-- Link Production: [railway production](fintrack-api-production-307f.up.railway.app) 
+- Link Production: [railway production](https://fintrack-api-production-fa2cc16c.up.railway.app) 
 - Link API: [postman collection](https://documenter.getpostman.com/view/56609845/2sBY4VLJ7Z) 
